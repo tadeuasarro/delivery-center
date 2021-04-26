@@ -1,11 +1,9 @@
 class OrdersController < ApplicationController
 
   def create
+    order = Order.create_order(params)
 
-    Rails.logger.debug params
-
-    redirect_to root_path
-
+    render json: order
   end
 
 end
