@@ -1,6 +1,6 @@
 class Customer < ApplicationRecord
 
-  has_many orders
+  has_many :orders, foreign_key: :customerId
 
   def self.validate_customer params
     new_hash = {
@@ -9,12 +9,5 @@ class Customer < ApplicationRecord
       email: params[:email],
       contact:"#{params[:phone][:area_code]}#{params[:phone][:number]}",
     }
-
-    customer = Customer.find_by(name: new_hash[:name])
-
-    customer = Customer.new(new_hash) if customer.nil?
-    customer.save
-
-    customer
   end
 end
