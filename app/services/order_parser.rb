@@ -3,7 +3,8 @@ class OrderParser
     new_hash = order_parse(params)
     new_hash.merge({
       customer: customer_parse(params[:buyer]),
-      items: items_parse(params[:order_items])
+      items: items_parse(params[:order_items]),
+      payments: payments_parse(params[:payments])
     })
   end
 
@@ -15,7 +16,7 @@ class OrderParser
       deliveryFee: params[:total_shipping].to_s,
       total_shipping: params[:total_shipping],
       total: params[:total_amount_with_shipping].to_s,
-      dtOrderCreated: params[:date_created],
+      dtOrderCreate: params[:date_created],
     }
 
     new_hash.merge(address_parse(params[:shipping][:receiver_address]))
@@ -60,5 +61,18 @@ class OrderParser
       latitude: params[:latitude],
       longitude: params[:longitude]
     }
+  end
+
+  def self.payments_parse(params)
+    new_array = []
+
+    params.each do |element|
+      new_array.push({
+                       type: element[:payment_type],
+                       value: element[:total_paid_amount],
+                     })
+    end
+
+    new_array
   end
 end

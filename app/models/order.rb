@@ -1,22 +1,26 @@
-class Order < ApplicationRecord
-  require 'faraday'
+require 'uri'
+require 'net/http'
 
+class Order < ApplicationRecord
   belongs_to :customer, foreign_key: :customerId
 
   def self.create_order(params)
-    json_validation(OrderParser.parse(params))
+    parsed_params = OrderParser.parse(params)
+
+    submit_to_database(parsed_params) if validate_json(parsed_params)
   end
 
-  def self.json_validation(params)
-    url = 'https://delivery-center-recruitment-ap.herokuapp.com'
+  def self.validate_json(params)
+    uri = URI.parse('https://delivery-center-recruitment-ap.herokuapp.com')
 
-    res ||= Faraday.post("#{url}#{service_path}") do |req|
-      req.headers['Content-Type'] = 'application/json'
-      req.headers['X-Sent'] = Time.zone.now.strftime('%Hh%M - %D')
-      req.body = payload.to_json
-    end
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
 
-    res
+    request = Net::HTTP::Post.new(uri, {'Content-Type' => 'application/json'})
+    request.body = params.to_json
+
+    response = http.request(request)
+    response.body.to_s == "OK"
   end
 
 end
