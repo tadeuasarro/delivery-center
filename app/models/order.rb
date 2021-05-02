@@ -23,4 +23,17 @@ class Order < ApplicationRecord
     response.body.to_s == "OK"
   end
 
+  def self.submit_to_database(params)
+    submit_order(params)
+    # submit_customer(params[:customer])
+    # submit_items(params[:items])
+    # submit_payments(params[:payments])
+  end
+
+  def self.submit_order(params)
+    Rails.logger.debug '---------------'
+    Rails.logger.debug params
+    Rails.logger.debug '---------------'
+  end
+
 end
