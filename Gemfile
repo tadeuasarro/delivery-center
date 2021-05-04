@@ -10,6 +10,7 @@ gem 'rails', '~> 6.1.3', '>= 6.1.3.1'
 
 gem 'rspec-rails'
 gem 'rubocop'
+gem 'shoulda-matchers'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
