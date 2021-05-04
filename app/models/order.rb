@@ -2,6 +2,26 @@ require 'uri'
 require 'net/http'
 
 class Order < ApplicationRecord
+  # I don't know about the business rules, so I'll just check the presence
+  validates :externalCode, presence: true
+  validates :storeId, presence: true
+  validates :subTotal, presence: true
+  validates :deliveryFee, presence: true
+  validates :total_shipping, presence: true
+  validates :total, presence: true
+  validates :city, presence: true
+  validates :district, presence: true
+  validates :street, presence: true
+  validates :complement, presence: true
+  validates :latitude, presence: true
+  validates :longitude, presence: true
+  validates :dtOrderCreate, presence: true
+  validates :postalCode, presence: true
+  validates :number, presence: true
+  validates :customerId, presence: true
+  validates :country, presence: true
+  validates :state, presence: true
+
   belongs_to :customer, foreign_key: :customerId
 
   has_many :item_order_relation, foreign_key: :order_id
@@ -40,7 +60,7 @@ class Order < ApplicationRecord
 
     unless customer
       customer = Customer.new(params)
-      customer.save
+      return :bad_request unless customer.save
     end
 
     customer
@@ -48,7 +68,8 @@ class Order < ApplicationRecord
 
   def self.submit_order(params, id)
     order = Order.new(params.except(:items, :payments, :customer).merge(customerId: id))
-    order.save
+    return :bad_request unless order.save
+
     order
   end
 

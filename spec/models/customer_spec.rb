@@ -10,10 +10,18 @@ RSpec.describe Customer, type: :model do
     )
   end
 
+  it 'expects the subject to me valid' do
+    expect(subject).to be_valid
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:externalCode) }
     it { is_expected.to validate_presence_of(:name) }
-    it { is_expected.not_to validate_presence_of(:email) }
-    it { is_expected.not_to validate_presence_of(:contact) }
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:contact) }
+  end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:orders) }
   end
 end
