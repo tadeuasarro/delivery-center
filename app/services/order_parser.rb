@@ -1,11 +1,11 @@
 class OrderParser
-  def self.parse params
+  def self.parse(params)
     new_hash = order_parse(params)
     new_hash.merge({
-      customer: customer_parse(params[:buyer]),
-      items: items_parse(params[:order_items]),
-      payments: payments_parse(params[:payments])
-    })
+                     customer: customer_parse(params[:buyer]),
+                     items: items_parse(params[:order_items]),
+                     payments: payments_parse(params[:payments])
+                   })
   end
 
   def self.order_parse(params)
@@ -16,14 +16,14 @@ class OrderParser
       deliveryFee: params[:total_shipping].to_s,
       total_shipping: params[:total_shipping],
       total: params[:total_amount_with_shipping].to_s,
-      dtOrderCreate: params[:date_created],
+      dtOrderCreate: params[:date_created]
     }
 
     new_hash.merge(address_parse(params[:shipping][:receiver_address]))
   end
 
   def self.customer_parse(params)
-    new_hash = {
+    {
       externalCode: params[:id],
       name: "#{params[:first_name].upcase} #{params[:last_name].upcase}",
       email: params[:email],
@@ -49,7 +49,7 @@ class OrderParser
   end
 
   def self.address_parse(params)
-    new_hash = {
+    {
       postalCode: params[:zip_code],
       number: params[:street_number],
       country: params[:country][:id],
@@ -69,7 +69,7 @@ class OrderParser
     params.each do |element|
       new_array.push({
                        type: element[:payment_type],
-                       value: element[:total_paid_amount],
+                       value: element[:total_paid_amount]
                      })
     end
 
