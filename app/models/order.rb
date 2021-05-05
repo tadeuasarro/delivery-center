@@ -78,7 +78,7 @@ class Order < ApplicationRecord
       item = Item.find_by(externalCode: element[:externalCode])
 
       unless item
-        item = Item.new(element.except(:subItems)).save
+        item = Item.new(element.except(:subItems))
         return :bad_request unless item.save
       end
 
