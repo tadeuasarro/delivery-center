@@ -45,5 +45,5 @@ Start server with:
 ```
 
 ### Opportunities
-- The main opportunity I see in this application is to better understand the business rules and requirements in order to create a better DB, regarding entities relationships and attributes.
+- The main opportunity I see in this application is to better understand the business rules and requirements in order to create a better DB, regarding entities relationships and attributes/ columns.
 - Eg.: The customer and the items are being created in the Order create route, but I understand that in a live e-commerce, for instance, these models would already have been created via other routes/ requests.
