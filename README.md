@@ -1,6 +1,6 @@
 # FDelivery Center Test
 
-##### In this API I'm parsing a JSON file and verificating it with a third party service, the I submit the data into a database.
+##### In this API I'm parsing a JSON file and verificating it with a third party service, then I submit the data into a database.
 
 #### Features
 - Parse the input;
@@ -43,3 +43,7 @@ Start server with:
 ```
   rspec
 ```
+
+### Opportunities
+- The main opportunity I see in this application is to better understand the business rules and requirements in order to create a better DB, regarding entities relationships and attributes.
+- Eg.: The customer and the items are being created in the Order create route, but I understand that in a live e-commerce, for instance, these models would already have been created via other routes/ requests.
